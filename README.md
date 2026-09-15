@@ -34,3 +34,8 @@ Việc học tập và nghiên cứu về phần mềm mã nguồn mở mang l�
 5. **7-Zip**
    * **Công dụng:** Phần mềm nén và giải nén dữ liệu.
    * **Giấy phép:** GNU Lesser General Public License (LGPL)
+
+## Giấy phép
+Mã nguồn trong kho này được phát hành
+theo [Giấy phép MIT](LICENSE).
+SPDX-License-Identifier: MIT
