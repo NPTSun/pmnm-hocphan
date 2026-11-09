@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Học phần PMNM{% endblock %} - {{ site_title }}</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (Thêm mới để có các icon sinh động) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- NAVBAR NÂNG CẤP VỚI CLASS custom-navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top shadow-sm py-2">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('index') }}">
+                <i class="bi bi-mortarboard-fill fs-4 text-warning"></i>
+                <span>PMNM Portal</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'index' }}" href="{{ url_for('index') }}">
+                            <i class="bi bi-house-door me-1"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint in ['sodiem_list', 'sodiem_detail'] }}" href="{{ url_for('sodiem_list') }}">
+                            <i class="bi bi-journal-check me-1"></i> Sổ điểm
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-calculator me-1"></i> Tiện ích
+                        </a>
+                        <ul class="dropdown-menu border-0 shadow-lg rounded-3">
+                            <li><a class="dropdown-item py-2" href="{{ url_for('calculator') }}"><i class="bi bi-plus-slash-minus me-2 text-primary"></i>Máy tính cơ bản</a></li>
+                            <li><a class="dropdown-item py-2" href="{{ url_for('score_calculator') }}"><i class="bi bi-award me-2 text-success"></i>Tính điểm môn học</a></li>
+                            <li><a class="dropdown-item py-2" href="{{ url_for('bmi_calculator') }}"><i class="bi bi-heart-pulse me-2 text-danger"></i>Tính chỉ số BMI</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'students_sql' }}" href="{{ url_for('students_sql') }}">
+                            <i class="bi bi-database me-1"></i> SQLite CRUD
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'docs' }}" href="{{ url_for('docs') }}">
+                            <i class="bi bi-file-earmark-text me-1"></i> Lý thuyết PDF
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    {% if session.username %}
+                        <li class="nav-item">
+                            <a class="nav-link text-warning fw-semibold px-3 py-1 bg-white bg-opacity-10 rounded-pill" href="{{ url_for('profile') }}">
+                                <i class="bi bi-person-circle me-1"></i> {{ session.username }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Đăng xuất</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Đăng nhập</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-primary text-white px-3" href="{{ url_for('register') }}">Đăng ký</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FLASH MESSAGES -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category if category != 'error' else 'danger' }} alert-dismissible fade show rounded-3 shadow-sm border-0" role="alert">
+                        <i class="bi bi-info-circle-fill me-2"></i> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="container py-4 flex-grow-1">
+        {% if not_found %}
+            <div class="card p-5 text-center shadow-sm border-0">
+                <i class="bi bi-exclamation-triangle text-danger display-1 mb-3"></i>
+                <h1 class="display-5 fw-bold text-dark">404 - Không tìm thấy trang</h1>
+                <p class="lead text-muted">{{ error_msg }}</p>
+                <div class="mt-3">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary px-4">← Về trang chủ</a>
+                </div>
+            </div>
+        {% else %}
+            {% block content %}{% endblock %}
+        {% endif %}
+    </main>
+
+    <!-- FOOTER CHUNG -->
+    <footer class="bg-white border-top py-4 mt-auto text-center text-muted small">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+            <div>
+                &copy; {{ current_year }} <strong>{{ site_title }}</strong> · Học phần Phần mềm mã nguồn mở
+            </div>
+            <div class="text-secondary">
+                Khoa CNTT - Trường ĐH Khoa học, Đại học Huế
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
