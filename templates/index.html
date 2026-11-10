@@ -99,7 +99,7 @@
                 <span class="badge text-white mb-2 align-self-start" style="background-color: #6366f1;">Chương 5 & 8</span>
                 <h5 class="card-title fw-bold">🔐 Xác Thực & Session</h5>
                 <p class="card-text text-muted flex-grow-1">
-                    Đăng ký và Đăng nhập với bảo vệ CSRF qua Flask-WTF (`hidden_tag`), kiểm tra trùng lặp tài khoản và lưu phiên làm việc an toàn với Session.
+                    Đăng ký và Đăng nhập với bảo vệ CSRF qua Flask-WTF, kiểm tra trùng lặp tài khoản và lưu phiên làm việc an toàn với Session.
                 </p>
                 <div class="d-flex flex-column gap-2 mt-3 pt-3 border-top">
                     <div class="d-flex gap-2">
@@ -131,6 +131,7 @@
         </div>
     </div>
 </div>
+
 <!-- ============================================================================== -->
 <!-- CARD ĐẶC BIỆT: GIẢI THÍCH TOÀN BỘ KIẾN TRÚC & LUỒNG TRUYỀN DỮ LIỆU CÁC CHƯƠNG -->
 <!-- ============================================================================== -->
@@ -190,7 +191,7 @@
                                     <tr>
                                         <td><strong>4. Cách truyền dữ liệu</strong></td>
                                         <td><code>render_template("sodiem.html", students=..., ds_lop=...)</code></td>
-                                        <td>Truyền danh sách sinh viên đã lọc và danh sách các lớp sang file Jinja2 HTML để hiển thị vòng lặp <code>{% for %}</code>.</td>
+                                        <td>Truyền danh sách sinh viên đã lọc và danh sách các lớp sang file Jinja2 HTML để hiển thị vòng lặp for.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>5. Xuất REST API</strong></td>
@@ -332,7 +333,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>2. Chống giả mạo CSRF</strong></td>
-                                        <td><code>{{ form.hidden_tag() }}</code></td>
+                                        <td><code>&#123;&#123; form.hidden_tag() &#125;&#125;</code></td>
                                         <td>Sinh ra một thẻ input ẩn chứa mã Token băm bảo mật. Nếu kẻ gian tạo form từ trang web khác gửi tới sẽ bị chặn đứng.</td>
                                     </tr>
                                     <tr>
@@ -379,7 +380,7 @@
                                     <tr>
                                         <td><strong>1. Bộ lọc mẫu tùy chỉnh</strong></td>
                                         <td><code>@app.template_filter("vnd")</code></td>
-                                        <td>Tạo bộ lọc định dạng tiền tệ. Trong HTML chỉ cần viết <code>{{ 50000 | vnd }}</code> sẽ hiển thị thành <code>50.000 ₫</code>.</td>
+                                        <td>Tạo bộ lọc định dạng tiền tệ. Trong HTML khi áp dụng filter sẽ hiển thị thành <code>50.000 ₫</code>.</td>
                                     </tr>
                                     <tr>
                                         <td><strong>2. Nạp dữ liệu tự động</strong></td>
