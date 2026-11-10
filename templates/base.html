@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Học phần PMNM{% endblock %} - {{ site_title }}</title>
-    <!-- Bootstrap 5 CSS -->
+    <!-- Bootstrap 5 CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons (Thêm mới để có các icon sinh động) -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Style tùy chỉnh (thêm ?v=2 để trình duyệt không lưu cache cũ) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
     {% block head %}{% endblock %}
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-light">
 
-    <!-- NAVBAR NÂNG CẤP VỚI CLASS custom-navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top shadow-sm py-2">
+    <!-- NAVBAR CHUNG: Khóa cứng màu nền Slate tối #0f172a, không bao giờ bị trong suốt -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-2" style="background-color: #0f172a !important; z-index: 1050;">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ url_for('index') }}">
-                <i class="bi bi-mortarboard-fill fs-4 text-warning"></i>
-                <span>PMNM Portal</span>
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-white" href="{{ url_for('index') }}">
+                <span class="fs-4">🎓</span>
+                <span style="background: linear-gradient(45deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">PMNM Portal</span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
@@ -26,32 +27,32 @@
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3 gap-1">
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'index' }}" href="{{ url_for('index') }}">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint == 'index' else 'text-white-50' }}" href="{{ url_for('index') }}">
                             <i class="bi bi-house-door me-1"></i> Trang chủ
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint in ['sodiem_list', 'sodiem_detail'] }}" href="{{ url_for('sodiem_list') }}">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint in ['sodiem_list', 'sodiem_detail'] else 'text-white-50' }}" href="{{ url_for('sodiem_list') }}">
                             <i class="bi bi-journal-check me-1"></i> Sổ điểm
                         </a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-calculator me-1"></i> Tiện ích
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-calculator me-1"></i> Tiện ích tính
                         </a>
-                        <ul class="dropdown-menu border-0 shadow-lg rounded-3">
+                        <ul class="dropdown-menu border-0 shadow-lg mt-2" style="border-radius: 10px;">
                             <li><a class="dropdown-item py-2" href="{{ url_for('calculator') }}"><i class="bi bi-plus-slash-minus me-2 text-primary"></i>Máy tính cơ bản</a></li>
                             <li><a class="dropdown-item py-2" href="{{ url_for('score_calculator') }}"><i class="bi bi-award me-2 text-success"></i>Tính điểm môn học</a></li>
                             <li><a class="dropdown-item py-2" href="{{ url_for('bmi_calculator') }}"><i class="bi bi-heart-pulse me-2 text-danger"></i>Tính chỉ số BMI</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'students_sql' }}" href="{{ url_for('students_sql') }}">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint == 'students_sql' else 'text-white-50' }}" href="{{ url_for('students_sql') }}">
                             <i class="bi bi-database me-1"></i> SQLite CRUD
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ 'active' if request.endpoint == 'docs' }}" href="{{ url_for('docs') }}">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint == 'docs' else 'text-white-50' }}" href="{{ url_for('docs') }}">
                             <i class="bi bi-file-earmark-text me-1"></i> Lý thuyết PDF
                         </a>
                     </li>
@@ -64,14 +65,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Đăng xuất</a>
+                            <a class="btn btn-sm btn-outline-light px-3" href="{{ url_for('logout') }}">Đăng xuất</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('login') }}">Đăng nhập</a>
+                            <a class="nav-link text-white-50" href="{{ url_for('login') }}">Đăng nhập</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-sm btn-primary text-white px-3" href="{{ url_for('register') }}">Đăng ký</a>
+                            <a class="btn btn-sm text-white px-3 fw-semibold" href="{{ url_for('register') }}" style="background-color: #4f46e5; border-color: #4f46e5;">Đăng ký</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -110,7 +111,7 @@
     </main>
 
     <!-- FOOTER CHUNG -->
-    <footer class="bg-white border-top py-4 mt-auto text-center text-muted small">
+    <footer class="bg-white border-top py-4 mt-auto text-muted small">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
             <div>
                 &copy; {{ current_year }} <strong>{{ site_title }}</strong> · Học phần Phần mềm mã nguồn mở
