@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Tính Chỉ Số BMI{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 col-md-6 mx-auto">
+    <div class="card-header bg-white border-bottom py-3">
+        <h4 class="fw-bold mb-0 text-primary">
+            ⚖️ Công cụ tính chỉ số khối cơ thể (BMI)
+        </h4>
+        <small class="text-muted">Đánh giá thể trạng chuẩn theo tiêu chuẩn WHO dành cho người Châu Á</small>
+    </div>
+    
+    <div class="card-body p-4">
+        <form method="POST" action="{{ url_for('bmi_calculator') }}">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Chiều cao (cm):</label>
+                <div class="input-group">
+                    <input type="number" step="0.1" name="height" class="form-control" 
+                           placeholder="Ví dụ: 170" value="{{ height_val }}" required>
+                    <span class="input-group-text bg-light">cm</span>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Cân nặng (kg):</label>
+                <div class="input-group">
+                    <input type="number" step="0.1" name="weight" class="form-control" 
+                           placeholder="Ví dụ: 62.5" value="{{ weight_val }}" required>
+                    <span class="input-group-text bg-light">kg</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                Tính toán kết quả BMI
+            </button>
+        </form>
+
+        <!-- THÔNG BÁO LỖI NẾU NHẬP SAI -->
+        {% if error %}
+            <div class="alert alert-danger mt-4 text-center">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <!-- KẾT QUẢ ĐỔI MÀU THEO THỂ TRẠNG -->
+        {% if result %}
+            <div class="mt-4 p-4 rounded-3 border text-center 
+                {% if result.color == 'danger' %} bg-danger bg-opacity-10 border-danger text-danger
+                {% elif result.color == 'success' %} bg-success bg-opacity-10 border-success text-success
+                {% elif result.color == 'warning' %} bg-warning bg-opacity-10 border-warning text-dark
+                {% endif %}">
+                
+                <h6 class="text-uppercase fw-bold mb-1">Chỉ số BMI của bạn</h6>
+                <div class="display-4 fw-bold mb-2">{{ result.bmi }}</div>
+
+                <div class="mb-3">
+                    <span class="badge fs-6 px-3 py-2
+                        {% if result.color == 'danger' %} bg-danger text-white
+                        {% elif result.color == 'success' %} bg-success text-white
+                        {% elif result.color == 'warning' %} bg-warning text-dark
+                        {% endif %}">
+                        {{ result.status }}
+                    </span>
+                </div>
+
+                <p class="mb-0 fw-semibold fs-6">
+                    {{ result.advice }}
+                </p>
+            </div>
+        {% endif %}
+
+        <!-- BẢNG THAM KHẢO TIÊU CHUẨN BMI -->
+        <div class="mt-4 pt-3 border-top">
+            <h6 class="fw-bold small text-muted text-uppercase mb-2">Bảng phân loại tham khảo:</h6>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered text-center small mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Chỉ số BMI</th>
+                            <th>Phân loại</th>
+                            <th>Màu cảnh báo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-warning">
+                            <td>&lt; 18.5</td>
+                            <td>Gầy (Thiếu cân)</td>
+                            <td><strong class="text-warning">Vàng</strong></td>
+                        </tr>
+                        <tr class="table-success">
+                            <td>18.5 - 22.9</td>
+                            <td>Bình thường (Vừa vặn)</td>
+                            <td><strong class="text-success">Xanh lá</strong></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>&ge; 23.0</td>
+                            <td>Thừa cân / Béo phì</td>
+                            <td><strong class="text-danger">Đỏ (Cảnh báo)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

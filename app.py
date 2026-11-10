@@ -202,29 +202,59 @@ def score_calculator():
 
 @app.route("/bmi", methods=["GET", "POST"])
 def bmi_calculator():
-    result, error, color = None, None, ""
+    result = None
+    error = None
+    height_val = ""
+    weight_val = ""
+    
     if request.method == "POST":
+        height_val = request.form.get("height", "").strip().replace(",", ".")
+        weight_val = request.form.get("weight", "").strip().replace(",", ".")
         try:
-            height = float(request.form.get("a", "").replace(",", "."))
-            weight = float(request.form.get("b", "").replace(",", "."))
-            if not (50 <= height <= 250):
-                error = "Chiều cao không hợp lệ (nhập từ 50 - 250 cm)"
-            elif not (10 <= weight <= 300):
-                error = "Cân nặng không hợp lệ (nhập từ 10 - 300 kg)"
+            h = float(height_val)
+            w = float(weight_val)
+            if not (50 <= h <= 250):
+                error = "Chiều cao không hợp lệ (vui lòng nhập từ 50 đến 250 cm)!"
+            elif not (10 <= w <= 300):
+                error = "Cân nặng không hợp lệ (vui lòng nhập từ 10 đến 300 kg)!"
             else:
-                bmi = round(weight / ((height / 100) ** 2), 2)
+                # BMI = Cân nặng (kg) / (Chiều cao (m) ^ 2)
+                bmi = round(w / ((h / 100) ** 2), 2)
+                
+                # Phân loại theo chuẩn Châu Á (IDI & WPRO):
                 if bmi < 18.5:
-                    status, color = "Thiếu cân", "warning"
-                elif bmi < 23:
-                    status, color = "Bình thường", "success"
-                elif bmi < 25:
-                    status, color = "Thừa cân", "primary"
+                    status = "Gầy (Thiếu cân)"
+                    color = "warning"    # Vàng
+                    advice = "⚠️ Bạn đang trong tình trạng gầy/thiếu cân. Hãy bổ sung thêm dinh dưỡng, protein và ngủ đủ giấc nhé!"
+                elif bmi < 23.0:
+                    status = "Bình thường (Vừa vặn)"
+                    color = "success"    # Xanh lá
+                    advice = "🎉 Tuyệt vời! Chỉ số cơ thể bạn rất cân đối và khỏe mạnh. Hãy tiếp tục duy trì lối sống này!"
+                elif bmi < 25.0:
+                    status = "Thừa cân"
+                    color = "danger"     # Đỏ
+                    advice = "🚨 CẢNH BÁO: Bạn đang có dấu hiệu thừa cân. Hãy chú ý giảm bớt tinh bột, đồ ngọt và tăng cường tập thể dục!"
                 else:
-                    status, color = "Béo phì", "danger"
-                result = f"BMI = {bmi} ({status})"
+                    status = "Béo phì"
+                    color = "danger"     # Đỏ cảnh báo nguy cơ
+                    advice = "🚨 CẢNH BÁO NGUY HIỂM: Bạn đang trong tình trạng béo phì! Cần điều chỉnh chế độ ăn uống khoa học và tập luyện thể thao ngay để phòng ngừa các bệnh tim mạch."
+
+                result = {
+                    "bmi": bmi,
+                    "status": status,
+                    "color": color,
+                    "advice": advice
+                }
         except (ValueError, TypeError):
-            error = "Vui lòng nhập giá trị hợp lệ!"
-    return render_template("bmi.html", result=result, error=error, color=color)
+            error = "Vui lòng nhập số hợp lệ cho cả chiều cao và cân nặng!"
+
+    return render_template(
+        "bmi.html", 
+        result=result, 
+        error=error, 
+        height_val=height_val, 
+        weight_val=weight_val
+    )
 
 # ==============================================================================
 # CHƯƠNG 6: QUẢN LÝ SINH VIÊN VỚI SQLITE (CRUD, Filter, Statistics)
