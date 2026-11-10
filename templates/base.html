@@ -28,18 +28,16 @@
                     <li class="nav-item">
                         <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint in ['sodiem_list', 'sodiem_detail'] else 'text-white-50' }}" href="{{ url_for('sodiem_list') }}">Sổ điểm</a>
                     </li>
-                    <!-- MỤC BMI ĐÃ ĐƯA RA NGOÀI MENU CHÍNH ĐỂ BẤM TRỰC TIẾP -->
-                    <li class="nav-item">
-                        <a class="nav-link {{ 'active fw-bold text-warning' if request.endpoint == 'bmi_calculator' else 'text-white' }}" href="{{ url_for('bmi_calculator') }}">
-                            ⚖️ Tính BMI
-                        </a>
-                    </li>
+                    <!-- MENU TIỆN ÍCH CHƯƠNG 4 & 5 -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">Tiện ích khác</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('calculator') }}">Máy tính cơ bản</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('score_calculator') }}">Tính điểm môn học</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('bmi_calculator') }}">Tính chỉ số BMI</a></li>
+                        <a class="nav-link dropdown-toggle {{ 'active fw-bold text-white' if request.endpoint in ['calculator', 'score_calculator', 'bmi_calculator'] else 'text-white-50' }}" href="#" role="button" data-bs-toggle="dropdown">
+                            Tiện ích tính (Chương 4 & 5)
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item py-2 fw-semibold text-primary" href="{{ url_for('bmi_calculator') }}">⚖️ Tính chỉ số BMI</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2" href="{{ url_for('calculator') }}">Máy tính cơ bản</a></li>
+                            <li><a class="dropdown-item py-2" href="{{ url_for('score_calculator') }}">Tính điểm môn học</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

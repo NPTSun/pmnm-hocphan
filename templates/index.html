@@ -3,93 +3,84 @@
 {% block title %}Tổng hợp Bài tập Học phần{% endblock %}
 
 {% block content %}
-<!-- BANNER CHÍNH CÓ NÚT BẤM DẪN THẲNG ĐẾN BMI -->
+<!-- BANNER CHÍNH -->
 <div class="p-4 p-md-5 mb-4 text-white rounded-4 shadow-sm" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
     <div class="col-md-9 px-0">
+        <span class="badge bg-warning text-dark mb-2 px-3 py-1 fw-bold">Học phần PMNM 2026</span>
         <h1 class="display-5 fw-bold mb-3">Cổng Bài Tập & Đồ Án PMNM</h1>
         <p class="lead my-3">Hệ thống tổng hợp toàn bộ các bài thực hành: Xử lý định tuyến Flask, Template Jinja2, Form Flask-WTF, CSDL SQLite và Báo cáo giấy phép nguồn mở.</p>
-        <div class="d-flex gap-2 flex-wrap mt-3">
-            <a href="{{ url_for('bmi_calculator') }}" class="btn btn-warning fw-bold px-3 py-2 shadow-sm">
-                ⚖️ Tính chỉ số BMI ngay →
-            </a>
-            <a href="{{ url_for('docs') }}" class="btn btn-outline-light fw-bold px-3 py-2">
-                Xem Báo cáo Giấy phép Slide 1 & 2
-            </a>
-        </div>
+        <a href="{{ url_for('docs') }}" class="btn btn-warning fw-bold px-3 py-2">
+            Xem Báo cáo Giấy phép Slide 1 & 2 →
+        </a>
     </div>
 </div>
 
-<h3 class="border-bottom pb-2 mb-4">Danh mục các ứng dụng thực hành</h3>
+<h3 class="border-bottom pb-2 mb-4">Danh mục các ứng dụng thực hành theo chương</h3>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <!-- Card 1: BMI ĐƯỢC TÁCH RIÊNG ĐỂ BẤM NHANH -->
-    <div class="col">
-        <div class="card h-100 shadow-sm border-0 border-top border-warning border-4">
-            <div class="card-body d-flex flex-column">
-                <span class="badge bg-warning text-dark mb-2 align-self-start">Tiện ích sức khỏe</span>
-                <h5 class="card-title fw-bold">⚖️ Tính Chỉ Số BMI</h5>
-                <p class="card-text text-muted flex-grow-1">Đo lường thể trạng cơ thể dựa trên chiều cao và cân nặng. Phân loại theo chuẩn Châu Á và tự động cảnh báo màu: 🔴 Béo phì, 🟢 Vừa vặn, 🟡 Gầy.</p>
-                <div class="mt-3 pt-2">
-                    <a href="{{ url_for('bmi_calculator') }}" class="btn btn-warning w-100 fw-bold">
-                        Mở công cụ tính BMI
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Card 2: SỔ ĐIỂM -->
+    <!-- CARD 1: CHƯƠNG 3 -->
     <div class="col">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">
                 <span class="badge bg-info text-dark mb-2 align-self-start">Chương 3</span>
                 <h5 class="card-title fw-bold">📋 Sổ điểm sinh viên</h5>
-                <p class="card-text text-muted flex-grow-1">Quản lý danh sách sinh viên qua bộ nhớ dict, lọc theo mã lớp bằng query string, xem trang chi tiết động với converter.</p>
-                <div class="d-flex gap-2 mt-3 pt-2">
-                    <a href="{{ url_for('sodiem_list') }}" class="btn btn-outline-primary btn-sm flex-grow-1">Mở bài tập</a>
-                    <a href="{{ url_for('api_sodiem') }}" target="_blank" class="btn btn-outline-secondary btn-sm">API JSON</a>
+                <p class="card-text text-muted flex-grow-1">Quản lý danh sách sinh viên qua bộ nhớ dict, lọc theo mã lớp bằng query string, xem trang chi tiết động với URL converter.</p>
+                <div class="d-flex gap-2 mt-3 pt-2 border-top">
+                    <a href="{{ url_for('sodiem_list') }}" class="btn btn-outline-primary btn-sm flex-grow-1">Mở sổ điểm</a>
+                    <a href="{{ url_for('api_sodiem') }}" target="_blank" class="btn btn-outline-secondary btn-sm">JSON API</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Card 3: MÁY TÍNH & ĐIỂM HỌC PHẦN -->
+    <!-- CARD 2: CHƯƠNG 4 & 5 (BAO GỒM CẢ BMI, MÁY TÍNH VÀ ĐIỂM HỌC PHẦN) -->
     <div class="col">
-        <div class="card h-100 shadow-sm border-0">
+        <div class="card h-100 shadow-sm border-0 border-top border-success border-4">
             <div class="card-body d-flex flex-column">
                 <span class="badge bg-success mb-2 align-self-start">Chương 4 & 5</span>
-                <h5 class="card-title fw-bold">🧮 Bộ tính toán học tập</h5>
-                <p class="card-text text-muted flex-grow-1">Xử lý form POST/GET an toàn, tính toán số học cơ bản và tự động quy đổi điểm tổng kết học phần (A/B/C/D/F) kèm xét điểm liệt.</p>
-                <div class="d-flex gap-2 mt-3 pt-2">
-                    <a href="{{ url_for('calculator') }}" class="btn btn-outline-success btn-sm flex-grow-1">Máy tính</a>
-                    <a href="{{ url_for('score_calculator') }}" class="btn btn-outline-success btn-sm flex-grow-1">Điểm HP</a>
+                <h5 class="card-title fw-bold">🧮 Bộ công cụ tính toán (Form POST/GET)</h5>
+                <p class="card-text text-muted flex-grow-1">
+                    Thực hành xử lý Form, kiểm tra tính hợp lệ dữ liệu (Validation), phân loại logic: Máy tính cơ bản, quy đổi điểm học phần và <strong>tính chỉ số thể trạng BMI</strong>.
+                </p>
+                
+                <!-- CÁC NÚT BẤM DẪN TỚI BÀI TẬP CHƯƠNG 4 & 5 -->
+                <div class="d-flex flex-column gap-2 mt-3 pt-2 border-top">
+                    <!-- Nút bấm BMI nổi bật dẫn thẳng tới trang tính BMI -->
+                    <a href="{{ url_for('bmi_calculator') }}" class="btn btn-warning btn-sm fw-bold text-dark d-flex justify-content-between align-items-center">
+                        <span>⚖️ Tính chỉ số BMI (Cảnh báo thể trạng)</span>
+                        <span>→</span>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('calculator') }}" class="btn btn-outline-success btn-sm flex-grow-1">Máy tính</a>
+                        <a href="{{ url_for('score_calculator') }}" class="btn btn-outline-success btn-sm flex-grow-1">Điểm HP</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Card 4: SQLITE CRUD -->
+    <!-- CARD 3: CHƯƠNG 6 -->
     <div class="col">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">
                 <span class="badge bg-danger mb-2 align-self-start">Chương 6</span>
                 <h5 class="card-title fw-bold">💾 CSDL SQLite (CRUD)</h5>
-                <p class="card-text text-muted flex-grow-1">Thực thi SQL thuần: Tìm kiếm LIKE, lọc GPA, sắp xếp ORDER BY, hàm tổng hợp COUNT/AVG/MAX/MIN, thêm mới và xóa dữ liệu.</p>
-                <div class="mt-3 pt-2">
+                <p class="card-text text-muted flex-grow-1">Thực thi SQL thuần: Tìm kiếm LIKE, lọc GPA, sắp xếp ORDER BY, hàm tổng hợp COUNT/AVG/MAX/MIN, INSERT mới, cộng điểm và DELETE.</p>
+                <div class="mt-3 pt-2 border-top">
                     <a href="{{ url_for('students_sql') }}" class="btn btn-outline-danger btn-sm w-100">Quản lý SQLite</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Card 5: AUTHENTICATION -->
+    <!-- CARD 4: CHƯƠNG 5 & 8 -->
     <div class="col">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">
                 <span class="badge bg-secondary mb-2 align-self-start">Chương 5 & 8</span>
                 <h5 class="card-title fw-bold">🔐 Xác thực & Session</h5>
-                <p class="card-text text-muted flex-grow-1">Đăng ký và Đăng nhập với bảo vệ CSRF qua Flask-WTF, kiểm tra trùng lặp tài khoản và lưu phiên làm việc an toàn.</p>
-                <div class="d-flex gap-2 mt-3 pt-2">
+                <p class="card-text text-muted flex-grow-1">Đăng ký và Đăng nhập với bảo vệ CSRF qua Flask-WTF, kiểm tra trùng lặp tài khoản và lưu phiên làm việc với Session.</p>
+                <div class="d-flex gap-2 mt-3 pt-2 border-top">
                     <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-sm flex-grow-1">Đăng nhập</a>
                     <a href="{{ url_for('register') }}" class="btn btn-secondary btn-sm flex-grow-1">Đăng ký</a>
                 </div>
@@ -97,14 +88,14 @@
         </div>
     </div>
 
-    <!-- Card 6: LÝ THUYẾT & PHÁP LÝ -->
+    <!-- CARD 5: BÀI TẬP LÝ THUYẾT -->
     <div class="col">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body d-flex flex-column">
                 <span class="badge bg-dark mb-2 align-self-start">Bài 1 & 2 PDF</span>
                 <h5 class="card-title fw-bold">📖 Báo cáo Lý thuyết</h5>
-                <p class="card-text text-muted flex-grow-1">Nội dung 4 quyền tự do FSF, hiện tượng rẽ nhánh MariaDB/MySQL, phân nhóm giấy phép mã nguồn mở và vụ kiện Welte v. D-Link.</p>
-                <div class="mt-3 pt-2">
+                <p class="card-text text-muted flex-grow-1">Nội dung 4 quyền tự do FSF, hiện tượng rẽ nhánh MariaDB/MySQL, phân loại giấy phép GPL/LGPL/MIT và vụ kiện Welte v. D-Link.</p>
+                <div class="mt-3 pt-2 border-top">
                     <a href="{{ url_for('docs') }}" class="btn btn-outline-dark btn-sm w-100">Đọc báo cáo</a>
                 </div>
             </div>
