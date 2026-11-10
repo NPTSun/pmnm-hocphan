@@ -131,4 +131,269 @@
         </div>
     </div>
 </div>
+<!-- ============================================================================== -->
+<!-- CARD ĐẶC BIỆT: GIẢI THÍCH TOÀN BỘ KIẾN TRÚC & LUỒNG TRUYỀN DỮ LIỆU CÁC CHƯƠNG -->
+<!-- ============================================================================== -->
+<div class="card shadow-sm border-0 border-top border-4 mt-5 mb-4" style="border-top-color: #0284c7 !important;">
+    <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+        <div>
+            <span class="badge bg-info text-dark mb-1">Tài liệu kỹ thuật nội bộ</span>
+            <h4 class="fw-bold mb-0 text-dark">
+                🔍 Bảng Giải Mã Luồng Dữ Liệu & Câu Lệnh Code (Từng Chương)
+            </h4>
+        </div>
+        <span class="badge bg-light text-muted border px-3 py-2">Backend: Flask · Jinja2 · SQLite</span>
+    </div>
+
+    <div class="card-body p-4">
+        <p class="text-muted mb-4">
+            Bảng tổng hợp chi tiết cơ chế hoạt động của toàn bộ dự án: <em>Lấy dữ liệu ở đâu</em>, <em>Dùng lệnh gì để lấy</em>, <em>Xử lý dữ liệu ra sao</em> và <em>Truyền về giao diện (Template) bằng cách nào</em>.
+        </p>
+
+        <!-- ACCORDION CHI TIẾT TỪNG CHƯƠNG -->
+        <div class="accordion" id="accordionCodeFlow">
+            
+            <!-- CHƯƠNG 3: SỔ ĐIỂM -->
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold text-primary bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flowCh3">
+                        📘 Chương 3: Sổ Điểm Sinh Viên (Routing, Query String & URL Converter)
+                    </button>
+                </h2>
+                <div id="flowCh3" class="accordion-collapse collapse show" data-bs-parent="#accordionCodeFlow">
+                    <div class="accordion-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20%;">Công đoạn</th>
+                                        <th style="width: 30%;">Câu lệnh / Cú pháp trong code</th>
+                                        <th style="width: 50%;">Ý nghĩa & Dữ liệu nhận/truyền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Nguồn dữ liệu</strong></td>
+                                        <td><code>STUDENTS_DICT</code> (In-memory)</td>
+                                        <td>Dữ liệu lưu tạm trong RAM dưới dạng Dictionary đa cấp lồng nhau (Key là MSSV, Value là thông tin & điểm số).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Lấy dữ liệu lọc</strong></td>
+                                        <td><code>request.args.get("lop", "")</code></td>
+                                        <td><strong>Lấy dữ liệu từ URL Query String:</strong> Đọc tham số sau dấu hỏi chấm trên trình duyệt (Ví dụ: <code>/sodiem?lop=K47A</code> sẽ lấy được chuỗi <code>"K47A"</code>).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Lấy dữ liệu động</strong></td>
+                                        <td><code>@app.route("/sodiem/&lt;mssv&gt;")</code></td>
+                                        <td><strong>URL Dynamic Converter:</strong> Bắt trực tiếp giá trị trên đường dẫn (VD: <code>/sodiem/23T1020001</code> ➔ truyền thẳng biến <code>mssv="23T1020001"</code> vào hàm Python).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Cách truyền dữ liệu</strong></td>
+                                        <td><code>render_template("sodiem.html", students=..., ds_lop=...)</code></td>
+                                        <td>Truyền danh sách sinh viên đã lọc và danh sách các lớp sang file Jinja2 HTML để hiển thị vòng lặp <code>{% for %}</code>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Xuất REST API</strong></td>
+                                        <td><code>jsonify(STUDENTS_DICT)</code></td>
+                                        <td>Chuyển đổi Dict của Python thành chuỗi định dạng chuẩn <strong>JSON</strong> và gắn Header <code>Content-Type: application/json</code>.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHƯƠNG 4 & 5: TÍNH TOÁN & BMI -->
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold text-success bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flowCh4">
+                        📗 Chương 4 & 5: Bộ Tính Toán & BMI (Form POST, Validation & Context)
+                    </button>
+                </h2>
+                <div id="flowCh4" class="accordion-collapse collapse" data-bs-parent="#accordionCodeFlow">
+                    <div class="accordion-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20%;">Công đoạn</th>
+                                        <th style="width: 30%;">Câu lệnh / Cú pháp trong code</th>
+                                        <th style="width: 50%;">Ý nghĩa & Dữ liệu nhận/truyền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Bắt phương thức</strong></td>
+                                        <td><code>if request.method == "POST":</code></td>
+                                        <td>Phân biệt người dùng mới mở trang (<code>GET</code>) hay người dùng bấm nút Gửi dữ liệu form (<code>POST</code>).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Lấy dữ liệu ô nhập</strong></td>
+                                        <td><code>request.form.get("height")</code><br><code>request.form.get("a")</code></td>
+                                        <td><strong>Lấy dữ liệu từ thẻ input:</strong> Lấy chuỗi người dùng gõ trong thẻ <code>&lt;input name="height"&gt;</code> gửi lên từ Request Payload.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Làm sạch & Ép kiểu</strong></td>
+                                        <td><code>.replace(",", ".")</code><br><code>float(height_val)</code></td>
+                                        <td>Chuẩn hóa dấu phẩy Việt Nam thành dấu chấm thập phân, ép từ kiểu <code>str</code> sang kiểu số thực <code>float</code> để tính toán.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Kiểm tra hợp lệ (Validation)</strong></td>
+                                        <td><code>try ... except (ValueError, TypeError):</code><br><code>if not (50 &lt;= h &lt;= 250):</code></td>
+                                        <td>Bảo vệ hệ thống: Bắt lỗi nếu người dùng nhập chữ, hoặc nhập số âm, số đo không thực tế để gán biến <code>error</code>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Truyền kết quả & Màu</strong></td>
+                                        <td><code>render_template("bmi.html", result=..., error=...)</code></td>
+                                        <td>Gói kết quả tính, phân loại và biến màu sắc (<code>danger</code>/<code>success</code>/<code>warning</code>) gửi sang Jinja2 để đổi màu banner.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHƯƠNG 6: SQLITE DATABASE -->
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold text-danger bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flowCh6">
+                        📕 Chương 6: Quản Lý Sinh Viên SQLite (SQL thuần, Parameterized Queries)
+                    </button>
+                </h2>
+                <div id="flowCh6" class="accordion-collapse collapse" data-bs-parent="#accordionCodeFlow">
+                    <div class="accordion-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20%;">Công đoạn</th>
+                                        <th style="width: 30%;">Câu lệnh / Cú pháp trong code</th>
+                                        <th style="width: 50%;">Ý nghĩa & Dữ liệu nhận/truyền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Kết nối CSDL</strong></td>
+                                        <td><code>sqlite3.connect(DB_FILE)</code><br><code>conn.row_factory = sqlite3.Row</code></td>
+                                        <td>Mở file <code>demo.db</code>. Thiết lập <code>Row</code> giúp truy xuất cột theo tên như Dict (VD: <code>row["name"]</code> thay vì vị trí số 0, 1).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Thống kê tổng hợp</strong></td>
+                                        <td><code>SELECT COUNT(*), AVG(gpa), MAX(gpa), MIN(gpa)</code></td>
+                                        <td>Hàm tổng hợp SQL tính toán tức thì trên toàn bảng, lấy kết quả 1 dòng bằng lệnh <code>cursor.fetchone()</code>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Tìm kiếm & Lọc an toàn</strong></td>
+                                        <td><code>WHERE name LIKE ?</code><br><code>params.append(f"%{search}%")</code></td>
+                                        <td><strong>Parameterized Query (Dấu hỏi chấm <code>?</code>):</strong> Ngăn chặn 100% tấn công tiêm mã độc <em>SQL Injection</em>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Ghi/Xóa dữ liệu (CRUD)</strong></td>
+                                        <td><code>INSERT INTO students ...</code><br><code>conn.commit()</code></td>
+                                        <td>Thực thi câu lệnh thêm/sửa/xóa và gọi <code>commit()</code> để lưu vĩnh viễn thay đổi vào ổ cứng.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Điều hướng & Flash</strong></td>
+                                        <td><code>flash("Thêm thành công!", "success")</code><br><code>redirect(url_for('students_sql'))</code></td>
+                                        <td>Áp dụng mô hình <strong>PRG (Post/Redirect/Get)</strong>: Thông báo pop-up rồi chuyển hướng để người dùng F5 không bị gửi lặp dữ liệu.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHƯƠNG 5 & 8: AUTH & SESSION -->
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold text-dark bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flowCh8">
+                        🔮 Chương 5 & 8: Form Flask-WTF, CSRF & Quản Lý Phiên (Session)
+                    </button>
+                </h2>
+                <div id="flowCh8" class="accordion-collapse collapse" data-bs-parent="#accordionCodeFlow">
+                    <div class="accordion-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20%;">Công đoạn</th>
+                                        <th style="width: 30%;">Câu lệnh / Cú pháp trong code</th>
+                                        <th style="width: 50%;">Ý nghĩa & Dữ liệu nhận/truyền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Khai báo Form</strong></td>
+                                        <td><code>class RegisterForm(FlaskForm):</code><br><code>validators=[DataRequired(), Email()]</code></td>
+                                        <td>Định nghĩa cấu trúc form bằng hướng đối tượng OOP, tự động kiểm tra rỗng, đúng dạng email và độ dài mật khẩu.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Chống giả mạo CSRF</strong></td>
+                                        <td><code>{{ form.hidden_tag() }}</code></td>
+                                        <td>Sinh ra một thẻ input ẩn chứa mã Token băm bảo mật. Nếu kẻ gian tạo form từ trang web khác gửi tới sẽ bị chặn đứng.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>3. Lưu trạng thái đăng nhập</strong></td>
+                                        <td><code>session["username"] = user["username"]</code><br><code>session.permanent = True</code></td>
+                                        <td><strong>Flask Session:</strong> Dữ liệu đăng nhập được mã hóa và lưu vào Cookie trình duyệt bằng chữ ký bí mật <code>app.secret_key</code> (tồn tại 7 ngày).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>4. Kiểm tra phiên (Auth Guard)</strong></td>
+                                        <td><code>if "username" not in session:</code><br><code>return redirect(url_for("login"))</code></td>
+                                        <td>Bảo vệ trang <code>/profile</code>: Nếu chưa đăng nhập thì chặn lại và đẩy về trang đăng nhập.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>5. Đăng xuất</strong></td>
+                                        <td><code>session.pop("username", None)</code></td>
+                                        <td>Xóa biến đăng nhập khỏi session cookie, đưa tài khoản về trạng thái khách (Guest).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOÀN CỤC: JINJA2 FILTERS & CONTEXT PROCESSOR -->
+            <div class="accordion-item border-0 rounded-3 shadow-sm overflow-hidden border">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold text-secondary bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#flowGlobal">
+                        ⚙️ Dữ Liệu Toàn Cục: Jinja2 Filter & Context Processor
+                    </button>
+                </h2>
+                <div id="flowGlobal" class="accordion-collapse collapse" data-bs-parent="#accordionCodeFlow">
+                    <div class="accordion-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20%;">Công đoạn</th>
+                                        <th style="width: 30%;">Câu lệnh / Cú pháp trong code</th>
+                                        <th style="width: 50%;">Ý nghĩa & Dữ liệu nhận/truyền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>1. Bộ lọc mẫu tùy chỉnh</strong></td>
+                                        <td><code>@app.template_filter("vnd")</code></td>
+                                        <td>Tạo bộ lọc định dạng tiền tệ. Trong HTML chỉ cần viết <code>{{ 50000 | vnd }}</code> sẽ hiển thị thành <code>50.000 ₫</code>.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>2. Nạp dữ liệu tự động</strong></td>
+                                        <td><code>@app.context_processor</code><br><code>def inject_global_data():</code></td>
+                                        <td>Tự động bơm các biến <code>site_title</code>, <code>current_year</code> vào <strong>tất cả</strong> các file HTML mà không cần phải truyền thủ công ở từng route.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- Hết Accordion -->
+    </div>
+</div>
 {% endblock %}
