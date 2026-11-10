@@ -6,13 +6,13 @@
     <title>{% block title %}Học phần PMNM{% endblock %} - {{ site_title }}</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=3">
     {% block head %}{% endblock %}
 </head>
 <body class="d-flex flex-column min-vh-100 bg-light">
 
-    <!-- NAVBAR: Khóa cứng màu nền #0f172a -->
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-2" style="background-color: #0f172a !important;">
+    <!-- NAVBAR: Khóa cứng màu Slate tối #0f172a -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-2" style="background-color: #0f172a !important; z-index: 1050;">
         <div class="container">
             <a class="navbar-brand fw-bold text-white" href="{{ url_for('index') }}">
                 🎓 PMNM Portal
@@ -22,26 +22,40 @@
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('index') }}">Trang chủ</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('sodiem_list') }}">Sổ điểm</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint == 'index' else 'text-white-50' }}" href="{{ url_for('index') }}">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint in ['sodiem_list', 'sodiem_detail'] else 'text-white-50' }}" href="{{ url_for('sodiem_list') }}">Sổ điểm</a>
+                    </li>
+                    <!-- MỤC BMI ĐÃ ĐƯA RA NGOÀI MENU CHÍNH ĐỂ BẤM TRỰC TIẾP -->
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active fw-bold text-warning' if request.endpoint == 'bmi_calculator' else 'text-white' }}" href="{{ url_for('bmi_calculator') }}">
+                            ⚖️ Tính BMI
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">Tiện ích tính</a>
+                        <a class="nav-link dropdown-toggle text-white-50" href="#" role="button" data-bs-toggle="dropdown">Tiện ích khác</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url_for('calculator') }}">Máy tính cơ bản</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('score_calculator') }}">Tính điểm môn học</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('bmi_calculator') }}">Tính chỉ số BMI</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('students_sql') }}">SQLite CRUD</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('docs') }}">Lý thuyết PDF</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint == 'students_sql' else 'text-white-50' }}" href="{{ url_for('students_sql') }}">SQLite CRUD</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active fw-bold text-white' if request.endpoint == 'docs' else 'text-white-50' }}" href="{{ url_for('docs') }}">Lý thuyết PDF</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto align-items-center gap-2">
                     {% if session.get('username') %}
                         <li class="nav-item"><a class="nav-link text-warning fw-semibold" href="{{ url_for('profile') }}">👤 {{ session.get('username') }}</a></li>
                         <li class="nav-item"><a class="btn btn-sm btn-outline-light" href="{{ url_for('logout') }}">Đăng xuất</a></li>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link text-white" href="{{ url_for('login') }}">Đăng nhập</a></li>
-                        <li class="nav-item"><a class="btn btn-sm btn-primary text-white" href="{{ url_for('register') }}">Đăng ký</a></li>
+                        <li class="nav-item"><a class="nav-link text-white-50" href="{{ url_for('login') }}">Đăng nhập</a></li>
+                        <li class="nav-item"><a class="btn btn-sm btn-primary text-white" href="{{ url_for('register') }}" style="background-color: #4f46e5; border-color: #4f46e5;">Đăng ký</a></li>
                     {% endif %}
                 </ul>
             </div>
